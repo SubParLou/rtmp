@@ -26,15 +26,15 @@ RUN ln -sf /dev/stdout /var/log/nginx/access.log && \
     
 #Setup Streaming Services Details
 #Facebook
-ENV FACEBOOK_URL rtmp://localhost:19350/rtmp/
+ENV FACEBOOK_URL rtmp://localhost:19350/rtmp/fb-live/
 ENV FACEBOOK_KEY ""
 
 #Kick
-ENV KICK_URL rtmp://localhost:19350/rtmp/
+ENV KICK_URL rtmp://localhost:19350/rtmp/kick-live/
 ENV KICK_KEY ""
 
 #Bolt+
-ENV BOLT_URL rtmp://localhost:19350/rtmp/
+ENV BOLT_URL rtmp://localhost:19350/rtmp/bolt-live/
 ENV BOLT_KEY ""
 
 #Restream.io
