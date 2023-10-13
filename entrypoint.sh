@@ -12,7 +12,7 @@ else
     sed -i 's|#facebook| |g' /etc/nginx/nginx.conf 
 fi
 
-if [ -n "${KICK_KEY}"]; then
+if [ -n "${KICK_KEY}" ]; then
 	echo "Kick activated"
 	KICK_KEY_esc=$(echo "$KICK_KEY" | sed 's/[\*\.&]/\\&/g')
 	sed -i 's|#kick|push '"$KICK_URL""$KICK_KEY_esc"';|g' /etc/nginx/nginx.conf
@@ -21,7 +21,7 @@ else
 	sed -i 's|#kick| |g' /etc/nginx/nginx.conf
 fi
 
-if [ -n "${BOLT_KEY}"]; then
+if [ -n "${BOLT_KEY}" ]; then
 	echo "Bolt activated"
 	BOLT_KEY_esc=$(echo "$BOLT_KEY" | sed 's/[\*\.&]/\\&/g')
 	sed -i 's|#bolt|push '"$BOLT_URL""$BOLT_KEY_esc"';|g' /etc/nginx/nginx.conf
