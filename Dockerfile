@@ -1,6 +1,6 @@
 FROM debian:bullseye-slim
 
-LABEL maintainer="Lou"
+LABEL maintainer="SubParLou"
 
 # Update and Load initial packages
 RUN apt-get update && \
