@@ -9,49 +9,51 @@ RUN apt-get update && \
 # Import setting files and set new files
 COPY nginx.conf /etc/nginx/nginx.conf
 COPY stunnel.conf /etc/stunnel/stunnel.conf
-RUN touch /var/log/stunnel4/stunnel.log
-
 
 # Make any configuration changes to nginx anf stunnel
-# RUN more /etc/nginx/nginx.setup >> /etc/nginx/nginx.conf
 RUN echo "ENABLED=1" >> /etc/default/stunnel4
 
-# Expose services to host
-EXPOSE 1935
+# Create stunnel log directory and set permissions
+RUN mkdir -p /var/log/stunnel4 && \
+    chown -R stunnel4:stunnel4 /var/log/stunnel4 && \
+    touch /var/log/stunnel4/stunnel.log
 
 # Forward logs to Docker
 RUN ln -sf /dev/stdout /var/log/nginx/access.log && \
     ln -sf /dev/stderr /var/log/nginx/error.log && \
     ln -sf /dev/stdout /var/log/stunnel4/stunnel.log
-    
-#Setup Streaming Services Details
-#Facebook
+
+# Setup Streaming Services Details
+# Facebook
 ENV FACEBOOK_URL rtmp://localhost:19350/rtmp/
 ENV FACEBOOK_KEY ""
 
-#Kick
+# Kick
 ENV KICK_URL rtmp://localhost:19351/rtmp/
 ENV KICK_KEY ""
 
-#Bolt+
+# Bolt+
 ENV BOLT_URL rtmp://localhost:19352/rtmp/
 ENV BOLT_KEY ""
 
-#Restream.io
+# Restream.io
 ENV RESTREAM_URL rtmp://live.restream.io/live/
 ENV RESTREAM_KEY ""
 
-#YouTube
+# YouTube
 ENV YOUTUBE_URL rtmp://a.rtmp.youtube.com/live2/
 ENV YOUTUBE_KEY ""
 
-#Twitch
+# Twitch
 ENV TWITCH_URL rtmp://iad05.contribute.live-video.net/app/
 ENV TWITCH_KEY ""
 
-#MixCloud
+# MixCloud
 ENV MIXCLOUD_URL rtmp://rtmp.mixcloud.com/broadcast/
 ENV MIXCLOUD_KEY ""
+
+# Expose services to host
+EXPOSE 1935
 
 COPY entrypoint.sh /entrypoint.sh
 
