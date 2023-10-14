@@ -10,13 +10,16 @@ RUN apt-get update && \
 COPY nginx.conf /etc/nginx/nginx.conf
 COPY stunnel.conf /etc/stunnel/stunnel.conf
 
-# Make any configuration changes to nginx anf stunnel
+# Create stunnel log directory, log file, and set permissions
+RUN mkdir -p /var/log/stunnel4 && \
+    touch /var/log/stunnel4/stunnel.log && \
+    chown -R nobody:nogroup /var/log/stunnel4
+
+# Make any configuration changes to nginx and stunnel
 RUN echo "ENABLED=1" >> /etc/default/stunnel4
 
-# Create stunnel log directory and set permissions
-RUN mkdir -p /var/log/stunnel4 && \
-    chown -R stunnel4:stunnel4 /var/log/stunnel4 && \
-    touch /var/log/stunnel4/stunnel.log
+# Expose services to host
+EXPOSE 1935
 
 # Forward logs to Docker
 RUN ln -sf /dev/stdout /var/log/nginx/access.log && \
@@ -52,14 +55,10 @@ ENV TWITCH_KEY ""
 ENV MIXCLOUD_URL rtmp://rtmp.mixcloud.com/broadcast/
 ENV MIXCLOUD_KEY ""
 
-# Expose services to host
-EXPOSE 1935
-
+# Copy the entrypoint script and set permissions
 COPY entrypoint.sh /entrypoint.sh
-
 RUN chmod +x /entrypoint.sh
 
+# Set the entrypoint and default command
 ENTRYPOINT ["/entrypoint.sh"]
-
-# Initialise nginx
 CMD ["nginx", "-g", "daemon off;"]
