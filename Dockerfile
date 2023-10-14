@@ -46,7 +46,7 @@ ENV YOUTUBE_URL rtmp://a.rtmp.youtube.com/live2/
 ENV YOUTUBE_KEY ""
 
 #Twitch
-ENV TWITCH_URL rtmp://live.twitch.tv/app/
+ENV TWITCH_URL rtmp://iad05.contribute.live-video.net/app/
 ENV TWITCH_KEY ""
 
 #MixCloud
